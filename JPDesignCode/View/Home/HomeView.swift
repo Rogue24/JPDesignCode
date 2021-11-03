@@ -175,43 +175,43 @@ struct HomeView: View {
                     
                     // 1.头部可以拖动滑动关闭，但是不能拖动查看下面内容
                     //【注意】：该方式在 iOS 15 上拖动返回时会直接卡死页面！
-                    CourseView(course: $store.courses[activeIndex],
-                               active: $active,
-                               finalActive: $finalActive,
-                               index: activeIndex,
-                               activeIndex: $activeIndex,
-                               activeView: $activeView,
-                               bounds: bounds,
-                               isDetail: true)
-                        // 像这种通过条件“突然”显示的View，默认都会带有Fade效果的过渡动画
-                        .transition(.identity) // 移除过渡动画
-                    
-                    // 2.可以拖动查看下面内容，但头部不可以拖动滑动关闭。
-//                    CourseDetail(course: $store.courses[activeIndex],
-//                                 activeView: $activeView,
-//                                 bounds: bounds,
-//                                 closeAction: {
-//                        self.store.courses[activeIndex].show = false
-//                        self.active = false
-//                        self.finalActive = false
-//                        self.activeIndex = -1
-//                        self.activeView = .zero
-//                    }, onChangedAction: { value in
-//                        print("Dragging detail, \(value.translation.height)")
-//                        guard value.translation.height > 50,
-//                              value.translation.height < 300 else { return }
-//                        self.activeView = value.translation
-//                    }, onEndedAction: { value in
-//                        if self.activeView.height > 50 {
-//                            self.store.courses[activeIndex].show = false
-//                            self.active = false
-//                            self.finalActive = false
-//                            self.activeIndex = -1
-//                        }
-//                        self.activeView = .zero
-//                    })
+//                    CourseView(course: $store.courses[activeIndex],
+//                               active: $active,
+//                               finalActive: $finalActive,
+//                               index: activeIndex,
+//                               activeIndex: $activeIndex,
+//                               activeView: $activeView,
+//                               bounds: bounds,
+//                               isDetail: true)
 //                        // 像这种通过条件“突然”显示的View，默认都会带有Fade效果的过渡动画
 //                        .transition(.identity) // 移除过渡动画
+                    
+                    // 2.可以拖动查看下面内容，但头部不可以拖动滑动关闭。
+                    CourseDetail(course: $store.courses[activeIndex],
+                                 activeView: $activeView,
+                                 bounds: bounds,
+                                 closeAction: {
+                        self.store.courses[activeIndex].show = false
+                        self.active = false
+                        self.finalActive = false
+                        self.activeIndex = -1
+                        self.activeView = .zero
+                    }, onChangedAction: { value in
+                        print("Dragging detail, \(value.translation.height)")
+                        guard value.translation.height > 50,
+                              value.translation.height < 300 else { return }
+                        self.activeView = value.translation
+                    }, onEndedAction: { value in
+                        if self.activeView.height > 50 {
+                            self.store.courses[activeIndex].show = false
+                            self.active = false
+                            self.finalActive = false
+                            self.activeIndex = -1
+                        }
+                        self.activeView = .zero
+                    })
+                        // 像这种通过条件“突然”显示的View，默认都会带有Fade效果的过渡动画
+                        .transition(.identity) // 移除过渡动画
                 }
             }
         }
